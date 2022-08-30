@@ -14,9 +14,9 @@
       </select>
 
         <label>Skills:</label>
-        <input type="text" v-model="tempSkills" @keyup.alt="addSkill">
-        <div v-for="skill in skills" :key="skill" class="pill">
-            {{skill}}
+        <input type="text" v-model="tempSkills" @keyup.alt="addSkill" class="n">
+        <div v-for="skill in skills" :key="skill">
+            <span @click="deleteSkill(skill)">{{skill}}</span>
         </div>
 
       <div class="terms">
@@ -54,6 +54,11 @@ export default {
      }
     }
   },
+  deleteSkill(skill){
+    this.skills = this.skills. filter((item)=>{
+      return skill !== item
+    })
+  }
 }
 </script>
 <style>
@@ -90,4 +95,16 @@ margin: 0 10px 0 0;
 position: relative;
 top: 2px;
 }
+n {
+display: inline-block;
+margin: 20px 10px 0 0;
+padding: 6px 12px;
+background: #eee;
+border-radius: 20px;
+font-size: 12px;
+letter-spacing: 1px;
+font-weight: bold;
+color: #777;
+cursor: pointer;
+ }
 </style>
