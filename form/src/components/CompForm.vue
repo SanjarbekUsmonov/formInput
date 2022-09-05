@@ -1,11 +1,13 @@
 <template>
   <div>
-    <form>
+    <form @submit.prevent="handleSubmit">
       <label>Email</label>
       <input type="email" required v-model="email">
 
       <label>Password</label>
       <input type="password" required v-model="password">
+
+      <div v-if="paswwordEror" class="eror"> {{paswwordEror}}</div>
 
       <label>Role:</label>
       <select v-model="role">
@@ -14,8 +16,8 @@
       </select>
 
         <label>Skills:</label>
-        <input type="text" v-model="tempSkills" @keyup.alt="addSkill" class="n">
-        <div v-for="skill in skills" :key="skill">
+        <input type="text" v-model="tempSkills" @keyup.alt="addSkill">
+        <div v-for="skill in skills" :key="skill" class="pill">
             <span @click="deleteSkill(skill)">{{skill}}</span>
         </div>
 
@@ -24,6 +26,9 @@
         <label>Accep terms and condition</label>
       </div>
 
+       <div class="submit">
+        <button>Create and Acound</button>
+       </div>
     </form>
     <p>Email: {{email}}</p>
     <p>Password: {{password}}</p>
@@ -40,7 +45,8 @@ export default {
       role:'designer',
       terms: false,
       tempSkills:'',
-      skills:[]
+      skills:[],
+      paswwordEror:''
 
     }
   },
@@ -58,9 +64,13 @@ export default {
     this.skills = this.skills. filter((item)=>{
       return skill !== item
     })
+  },
+  handleSubmit(){
+    this.paswwordEror = this.password.length > 5 ? '': 'Password must be at least 6 chars long'
   }
 }
 </script>
+
 <style>
 form{
   max-width: 420px;
@@ -95,7 +105,7 @@ margin: 0 10px 0 0;
 position: relative;
 top: 2px;
 }
-n {
+.pill {
 display: inline-block;
 margin: 20px 10px 0 0;
 padding: 6px 12px;
@@ -106,5 +116,24 @@ letter-spacing: 1px;
 font-weight: bold;
 color: #777;
 cursor: pointer;
+ }
+ button{
+  background: blue;
+  border: 0;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: white;
+  border-radius: 20px;
+ }
+ .submit{
+  text-align: center;
+ }
+ button:hover{
+  /* box-shadow: 2px 2px 3px 3px blue; */
+  opacity: 0.6;
+  cursor: pointer;
+ }
+ .eror{
+  color: red;
  }
 </style>
